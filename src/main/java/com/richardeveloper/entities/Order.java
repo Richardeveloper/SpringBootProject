@@ -1,6 +1,7 @@
 package com.richardeveloper.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -99,6 +100,14 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 
+	public BigDecimal getTotal() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (OrderItem orderItem : items) {
+			total = total.add(orderItem.getSubTotal());
+		}
+		return total;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
