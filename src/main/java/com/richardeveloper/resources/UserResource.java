@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,17 +29,17 @@ public class UserResource {
 	public ResponseEntity<List<User>> findAll(){
 		List<User> users = service.findAll();
 		if(users.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 		else {
-			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+			return ResponseEntity.ok().body(users);
 		}
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id){
 		User user = service.findById(id);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return ResponseEntity.ok().body(user);
 	}
 	
 	@PostMapping
